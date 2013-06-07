@@ -8,9 +8,9 @@ require '../vendor/autoload.php';
 
 ini_set('default_charset', 'UTF-8');
 ini_set('display_errors', '1');
-date_default_timezone_set('UTC');
 error_reporting(E_ALL);
-ini_set('display_errors', '1');
+
+date_default_timezone_set('UTC');
 session_cache_limiter(false);
 session_start();
 
