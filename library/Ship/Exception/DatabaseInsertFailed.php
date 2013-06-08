@@ -16,21 +16,11 @@
  * all licensed copies of the Software.
  *
  */
-namespace Ship;
+namespace Ship\Exception;
 
 /**
- * Service
+ * DatabaseInsertFailed
  */
-abstract class Service
+class DatabaseInsertFailed extends \Exception
 {
-	/**
-	 * Retrieve a database connection
-	 * @return \MongoDB
-	 */
-	protected static function getDatabaseConnection()
-	{
-	    global $appSettings;
-	    $mongo = new \Mongo($appSettings['mongoDbConnection']);
-	    return $mongo->selectDB($appSettings['mongoDbDatabase']);
-	}
 }
