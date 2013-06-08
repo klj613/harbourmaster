@@ -23,14 +23,14 @@ namespace Ship;
  */
 abstract class Service
 {
-
 	/**
 	 * Retrieve a database connection
-	 * @return null
+	 * @return \MongoDB
 	 */
 	protected static function getDatabaseConnection()
 	{
-	    // TODO : Stub
-		return null;
+	    global $appSettings;
+	    $mongo = new \Mongo($appSettings['mongoDbConnection']);
+	    return $mongo->selectDB($appSettings['mongoDbDatabase']);
 	}
 }
