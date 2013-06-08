@@ -38,7 +38,7 @@ $app = new \Slim\Slim(array(
         'debug' => true,
         'log.level' => \Slim\Log::DEBUG,
         'log.enabled' => true,
-        'templates.path' => APPLICATION_PATH . '/views/'
+        'templates.path' => APPLICATION_PATH . '/resources/views/'
 ));
 
 // Routes are automatically loaded into
