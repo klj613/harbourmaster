@@ -1,6 +1,8 @@
 <?php
 $appSettings = array(
     'routeCacheTtl' => 1,
+    'mongoDbDatabase' => 'harbourmaster',
+    'mongoDbConnection' => 'mongodb://localhost:27017/harbourmaster',
 );
 
 require '../library/Ship/Autoloader.php';
