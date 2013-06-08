@@ -1,6 +1,6 @@
 <?php
 $appSettings = array(
-    'routeCacheTtl' => 3600,
+    'routeCacheTtl' => 1,
 );
 
 require '../library/Ship/Autoloader.php';
