@@ -38,7 +38,7 @@ $app->post('/boat', function() use($app)
             $response->body(
                 json_encode(
                     array(
-                        'success'=>true,
+                        'success' => true,
                         'id' => 'todo'
                     )
                 )
@@ -49,7 +49,7 @@ $app->post('/boat', function() use($app)
             $response->body(
                 json_encode(
                     array(
-                        'success'=>false,
+                        'success' => false,
                         'id' => '',
                         'error' => 'Save error'
                     )
@@ -59,5 +59,14 @@ $app->post('/boat', function() use($app)
         return;
     }
     $app->status(400);
+    $response->body(
+        json_encode(
+            array(
+                'success' => false,
+                'id' => '',
+                'error' => 'Bad Request'
+            )
+        )
+    );
     return;
 });
