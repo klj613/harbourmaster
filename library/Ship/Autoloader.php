@@ -35,9 +35,6 @@ class Autoloader {
 				get_include_path ()
 		) ) );
 		spl_autoload_register ( function ($className) {
-		    if (!strstr($className, "Routes")) {
-		        return;
-		    }
 			if (! class_exists ( $className, false )) {
 				$path =  realpath(
 				    __DIR__ . '/../' .
