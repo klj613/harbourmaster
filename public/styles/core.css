@@ -6,3 +6,13 @@ footer {
 	left: 0;
 	width: 100%;
 }
+.container .boat-out,
+.container .boat-out-error {
+	margin-top: 30px;
+	display: none;
+}
+.container .boat-out textarea,
+.container .boat-out-error textarea {
+	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+	text-align: center;
+}

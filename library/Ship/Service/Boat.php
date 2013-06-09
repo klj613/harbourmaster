@@ -73,4 +73,45 @@ class Boat extends Service
 
         throw new DatabaseInsertFailed('Insert to Mongo failed');
     }
+
+    /**
+     * Retrieve a single boat based on an array of tags.
+     *
+     * @param array $tags
+     * @throws \Exception
+     * @return array|null
+     */
+    public function getBoat($tags)
+    {
+        if (!is_array($tags)) {
+            throw new \Exception('tags was expected to be an array.');
+        }
+
+        $tags = $this->cleanTags($tags);
+        $query = array();
+
+        if (!empty($tags)) {
+            $query = array(
+                't' => array('$in' => $tags),
+            );
+        }
+
+        $collection = static::getDatabaseConnection()->boats;
+        /* @var $collection \MongoCollection */
+        $record = $collection->findOne($query, array('_id', 't', 'u'));
+        return $record;
+    }
+
+    private function cleanTags($tags)
+    {
+        $final = array();
+        foreach ($tags as $tag) {
+            $trimmed = trim($tag);
+            if (!empty($trimmed)) {
+                $final[] = $trimmed;
+            }
+        }
+
+        return $final;
+    }
 }
