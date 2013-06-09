@@ -27,7 +27,8 @@ use Ship\Service;
 class Boat extends Service
 {
     /**
-     * Create a boat record
+     * Create a boat record, but if the boat already exists then we use return
+     * the existing boat record instead. No duplication and all.
      *
      * @param string $url
      * @param array $tags (optional)
@@ -45,10 +46,16 @@ class Boat extends Service
      *         )
      *     );
      */
-    public static function addBoat($url, $tags)
+    public function addBoat($url, $tags)
     {
         if (!is_array($tags)) {
             throw new \Exception('tags was expected to be an array.');
+        }
+
+        // Check if the URL already exists.
+        $existingBoat = $this->getBoatByUrl($url);
+        if (is_array($existingBoat)) {
+            return $existingBoat;
         }
 
         $now = new \MongoDate(time());
@@ -72,6 +79,24 @@ class Boat extends Service
         }
 
         throw new DatabaseInsertFailed('Insert to Mongo failed');
+    }
+
+    /**
+     * Retrieve a single boat based on the URL
+     *
+     * @param string $url
+     * @return array|null
+     */
+    public function getBoatByUrl($url)
+    {
+        $query = array(
+            'u' => $url
+        );
+
+        $collection = static::getDatabaseConnection()->boats;
+        /* @var $collection \MongoCollection */
+        $record = $collection->findOne($query, array('_id', 't', 'u'));
+        return $record;
     }
 
     /**
@@ -102,6 +127,11 @@ class Boat extends Service
         return $record;
     }
 
+    /**
+     *
+     * @param array $tags
+     * @return multitype:string
+     */
     private function cleanTags($tags)
     {
         $final = array();
