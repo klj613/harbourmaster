@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Harbour Master</title>
-
-        <link href="/styles/core.css" media="screen" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="/js/jquery.1.7.1.min.js"></script>
-        <script type="text/javascript" src="/js/functions.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="/styles/flat-ui.css" rel="stylesheet">
+        <link href="/styles/core.css" rel="stylesheet">
 
     </head>
