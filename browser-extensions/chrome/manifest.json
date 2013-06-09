@@ -1,0 +1,17 @@
+{
+	"name": "GitShip",
+	"version": "1.0.0.0",
+	"description": "Git Ship for Chrome provides an easy way to share ships with the world.",
+	"manifest_version": 2,
+	"permissions": [
+		"webRequest",
+		"http://*/*",
+		"https://*/*",
+		"tabs"
+	],
+    "browser_action": {
+        "default_title": "GitShip",
+        "default_popup": "index.html",
+        "default_icon": "128.png"
+    }
+}
