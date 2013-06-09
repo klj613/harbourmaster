@@ -22,3 +22,4 @@
     <script src="/js/jquery.tagsinput.js"></script>
     <script src="/js/jquery.placeholder.js"></script>
     <script src="/js/jquery.stacktable.js"></script>
+    <script src="/js/application.js"></script>
