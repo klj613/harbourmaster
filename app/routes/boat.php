@@ -1,4 +1,9 @@
 <?php
+// This block wont ever get hit, it's purely for the IDE
+if (!isset($app)) {
+    $app = \Slim\Slim;
+}
+
 /* @var $app \Slim\Slim */
 use Skinny\Form;
 
@@ -16,7 +21,7 @@ $app->get('/boat', function() use($app)
             $response = $app->response();
             $response->header('Content-Type', 'application/json');
             $query = array(); // Stub
-            $service = new Ship\Service\Boat();
+            $service = new \Ship\Service\Boat();
             $boat = $service->getBoat($tags);
             if (null != $boat) {
                 $boat['id'] = $boat['_id']->{'$id'};
@@ -41,7 +46,7 @@ $app->post('/boat', function() use($app)
 {
     $form = new Form();
     $form->addElement('url', true);
-    $form->addElement('tags', true); // By specifying required as true, the NotEmpty validator is applied.
+    $form->addElement('tags', false); // By specifying required as true, the NotEmpty validator is applied.
 
     $response = $app->response();
     $response->header('Content-Type', 'application/json');
@@ -49,12 +54,33 @@ $app->post('/boat', function() use($app)
     if ($form->isValid($app->request()->post())) {
         try {
             // Stub for save.
+            $tmpTags = $app->request()->post('tags');
+            $url = $app->request()->post('url');
+            if (!is_array($tmpTags)) {
+                $trimmed = trim($tmpTags);
+                if (!empty($trimmed)) {
+                    $tmp = explode(",", $tmpTags);
+                    $tags = array();
+                    foreach ($tmp as $tag) {
+                        $tags[] = $tag;
+                    }
+                } else {
+                    $tags = array('boat');
+                }
+            } else {
+                if (empty($tmpTags)) {
+                    $tmpTags[] = 'boat';
+                }
+                $tags = $tmpTags;
+            }
+            $service = new \Ship\Service\Boat();
+            $result = $service->addBoat($url, $tags);
             $app->status(200); // Should be 201, but we want to return data as well.
             $response->body(
                 json_encode(
                     array(
                         'success' => true,
-                        'id' => 'todo'
+                        'id' => $result['_id']->{'$id'}
                     )
                 )
             );
