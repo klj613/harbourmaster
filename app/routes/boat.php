@@ -9,10 +9,25 @@ $app->get('/boat', function() use($app)
 {
     if ($app->request()->isAjax()) {
         $tags = $app->request()->get('tags');
+        $tags = explode(",", $tags);
         $query = array();
         if (is_array($tags) && !empty($tags)) {
             // Build Query
+            $response = $app->response();
+            $response->header('Content-Type', 'application/json');
             $query = array(); // Stub
+            $service = new Ship\Service\Boat();
+            $boat = $service->getBoat($tags);
+            if (null != $boat) {
+                $boat['id'] = $boat['_id']->{'$id'};
+                unset($boat['_id']);
+                $body = json_encode(array('total' => 1, 'boat' => $boat));
+            } else {
+                $body = json_encode(array('total' => 0, 'boat' => array()));
+            }
+
+            $response->body($body);
+            return;
         }
         // Stub for locating from databe
     }
