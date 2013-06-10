@@ -9,7 +9,7 @@ $(document).ready(function(){
 		a.preventDefault();
 		var o = {tags:$('input.tags').val(),url:u};
 		$.ajax({
-	        url: 'http://gitship.local/boat',
+	        url: 'http://gitship.com/boat',
 	        type: 'POST',
 	        dataType: 'json',
 	        data: o,
