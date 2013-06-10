@@ -4,7 +4,7 @@
                 <div class="span7">
                     <h3 class="footer-title">Fork Me</h3>
                     <p>
-                        Like GitShip.com? Fork us on GitHub!
+                        Like GitShip.com? Fork us on <a href="https://github.com/rogerthomas84/harbourmaster" target="_blank">GitHub</a>!
                     </p>
                 </div>
             </div>
