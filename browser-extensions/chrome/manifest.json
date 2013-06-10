@@ -3,6 +3,11 @@
 	"version": "1.0.0.0",
 	"description": "Git Ship for Chrome provides an easy way to share ships with the world.",
 	"manifest_version": 2,
+	"icons": {
+	   "16": "16.png",
+       "48": "48.png",
+       "128": "128.png"
+    },
 	"permissions": [
 		"webRequest",
 		"http://*/*",
