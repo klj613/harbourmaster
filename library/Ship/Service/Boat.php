@@ -131,12 +131,23 @@ class Boat extends Service
         /* @var $collection \MongoCollection */
         $records = $collection->find($query, array('_id', 't', 'u'))
             ->sort($sortBy)
-            ->limit(1);
+            ->limit(100);
+
+        $use = 1;
+        $count = $records->count(true);
+        if ($count > 0) {
+            $use = rand(1, $count);
+        }
 
         $return = null;
+        $i = 0;
         foreach ($records as $rec) {
-
+            $i++;
+            if ($i != $use) {
+                continue;
+            }
             $return = $rec;
+            break;
         }
         return $return;
     }
