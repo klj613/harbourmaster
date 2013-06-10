@@ -63,7 +63,7 @@ class Boat extends Service
         $boat = array();
         $boat['cd'] = new \MongoDate(time());
         $boat['u'] = $url;
-        $boat['t'] = $tags;
+        $boat['t'] = $this->cleanTags($tags);
 
         $collection = static::getDatabaseConnection()->boats;
         /* @var $collection \MongoCollection */
@@ -121,13 +121,28 @@ class Boat extends Service
             );
         }
 
+        $sortFields = array('t', 'cd', 't');
+        $sortDirections = array(1, -1);
+        $randomField = rand(0, (count($sortFields) - 1));
+        $randomDirection = rand(0, (count($sortDirections) - 1));
+        $sortBy = array($sortFields[$randomField] => $sortDirections[$randomDirection]);
+
         $collection = static::getDatabaseConnection()->boats;
         /* @var $collection \MongoCollection */
-        $record = $collection->findOne($query, array('_id', 't', 'u'));
-        return $record;
+        $records = $collection->find($query, array('_id', 't', 'u'))
+            ->sort($sortBy)
+            ->limit(1);
+
+        $return = null;
+        foreach ($records as $rec) {
+
+            $return = $rec;
+        }
+        return $return;
     }
 
     /**
+     * Clean the tags sent by the query.
      *
      * @param array $tags
      * @return multitype:string
@@ -136,12 +151,29 @@ class Boat extends Service
     {
         $final = array();
         foreach ($tags as $tag) {
-            $trimmed = trim($tag);
+            // Replace all non-alphanumeric characters.
+            $trimmed = trim(preg_replace("/[^A-Za-z0-9 ]/", '', $tag));
             if (!empty($trimmed)) {
-                $final[] = $trimmed;
+                $final[] = mb_strtolower($trimmed);
             }
         }
 
         return $final;
+    }
+
+    /**
+     * Retrieve the count of boats.
+     *
+     * @return integer
+     */
+    private function getCount()
+    {
+        $collection = static::getDatabaseConnection()->boats;
+        /* @var $collection \MongoCollection */
+        $count = $collection->count();
+        if ($count) {
+            return $count;
+        }
+        return 0;
     }
 }
