@@ -3,8 +3,7 @@ Harbour Master
 
 ### Required Setup ###
 
- * Run `php composer.phar install`
- * Create the directory `/writable/cache` in the root of the project.
+ * Run `php composer.phar install --dev`
  * Give `/writable/cache` read/write permission to the web user (or just `chmod 777 -R` for the cool kids)
 
 ### Application Settings ###
@@ -20,25 +19,7 @@ By default, the routes declared in `app/routes` are cached in a JSON file in `wr
 the cache has a TTL of 3600, although this can be changed by altering the `routeCacheTtl` setting in `$appSettings`
 
 
+### Docs ###
 
-### Example Apache VirtualHost ###
-
-```text
-<VirtualHost *:80>
-        ServerAdmin webmaster@localhost
-        ServerName example.local
-        DocumentRoot /path/to/public
-        <Directory "/path/to/public">
-            Order Deny,Allow
-            Allow from all
-            AllowOverride None
-            SetEnv APPLICATION_ENV production
-            RewriteEngine On
-            RewriteCond %{REQUEST_FILENAME} -s [OR]
-            RewriteCond %{REQUEST_FILENAME} -l [OR]
-            RewriteCond %{REQUEST_FILENAME} -d
-            RewriteRule ^.*$ - [NC,L]
-            RewriteRule ^.*$ index.php [NC,L]
-        </Directory>
-</VirtualHost>
-```
+* [Example apache virtualhost](vhost.dist)
+* [How to use docker for harbourmaster](docker_setup.md)
